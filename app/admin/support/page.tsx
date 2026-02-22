@@ -44,7 +44,10 @@ export default function AdminSupportPage() {
                 },
                 (payload: { new: ChatMessage }) => {
                     if (payload.new.user_id === selectedUser) {
-                        setMessages((prev) => [...prev, payload.new as ChatMessage]);
+                        setMessages((prev) => {
+                            if (prev.some((m) => m.id === payload.new.id)) return prev;
+                            return [...prev, payload.new as ChatMessage];
+                        });
                     } else if (!payload.new.is_admin) {
                         toast.success("رسالة دعم فني جديدة!");
                         fetchUsersWithMessages(); // Refresh the list
@@ -119,12 +122,18 @@ export default function AdminSupportPage() {
             is_admin: true,
         };
 
-        const { error } = await supabase.from("chat_messages").insert([newMessage]);
+        const { data, error } = await supabase.from("chat_messages").insert([newMessage]).select().single();
 
         if (error) {
             toast.error("فشل إرسال الرسالة");
         } else {
             setInputValue("");
+            if (data) {
+                setMessages((prev) => {
+                    if (prev.some((m) => m.id === data.id)) return prev;
+                    return [...prev, data as ChatMessage];
+                });
+            }
         }
         setSending(false);
     };

@@ -57,7 +57,10 @@ export default function ChatPage() {
             filter: `user_id=eq.${user.id}`,
           },
           (payload: { new: ChatMessage }) => {
-            setMessages((prev) => [...prev, payload.new as ChatMessage]);
+            setMessages((prev) => {
+              if (prev.some((m) => m.id === payload.new.id)) return prev;
+              return [...prev, payload.new as ChatMessage];
+            });
             if (payload.new.is_admin) {
               toast.success("رسالة جديدة من الإدارة!");
             }
@@ -96,12 +99,18 @@ export default function ChatPage() {
       is_admin: false,
     };
 
-    const { error } = await supabase.from("chat_messages").insert([newMessage]);
+    const { data, error } = await supabase.from("chat_messages").insert([newMessage]).select().single();
 
     if (error) {
       toast.error("فشل إرسال الرسالة");
     } else {
       setInputValue("");
+      if (data) {
+        setMessages((prev) => {
+          if (prev.some((m) => m.id === data.id)) return prev;
+          return [...prev, data as ChatMessage];
+        });
+      }
     }
     setLoading(false);
   };

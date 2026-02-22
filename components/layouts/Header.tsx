@@ -384,107 +384,116 @@ export default function Header() {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden relative z-50 text-white text-2xl p-2"
+            className="md:hidden relative z-[60] text-white text-2xl p-2"
           >
             {isOpen ? <FaTimes /> : <FaBars />}
           </button>
         </div>
+      </header>
 
-        {/* Mobile Menu Overlay */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, x: "100%" }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed inset-0 bg-dark z-40 md:hidden pt-24 px-8 overflow-y-auto"
-            >
-              <div className="flex flex-col gap-6">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => {
-                      if (pathname !== link.href) {
-                        window.dispatchEvent(new CustomEvent('showGlobalLoader', { detail: `جاري التوجه إلى ${link.name}...` }));
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, x: "100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed inset-0 bg-dark z-40 md:hidden pt-24 px-8 overflow-y-auto"
+          >
+            <div className="flex flex-col gap-6">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => {
+                    if (pathname !== link.href) {
+                      window.dispatchEvent(new CustomEvent('showGlobalLoader', { detail: `جاري التوجه إلى ${link.name}...` }));
+                    }
+                    setIsOpen(false);
+                  }}
+                  className="text-2xl font-bold flex items-center gap-4 text-white"
+                >
+                  <link.icon className="text-primary" />
+                  {link.name}
+                </Link>
+              ))}
+
+              <div className="h-px bg-white/10 my-4" />
+
+              {!user && (
+                <Button
+                  onClick={() => {
+                    setIsOpen(false);
+                    setIsLoginModalOpen(true);
+                  }}
+                  className="w-full text-xl py-4 flex items-center justify-center gap-2"
+                >
+                  <FaSignInAlt /> حياك، سجل دخول
+                </Button>
+              )}
+
+              {user && (
+                <>
+                  <div className="flex items-center gap-4 mb-4">
+                    <img
+                      src={
+                        profile?.avatar_url ||
+                        `https://ui-avatars.com/api/?name=U&background=38bdf8`
                       }
-                      setIsOpen(false);
-                    }}
-                    className="text-2xl font-bold flex items-center gap-4 text-white"
-                  >
-                    <link.icon className="text-primary" />
-                    {link.name}
-                  </Link>
-                ))}
-
-                <div className="h-px bg-white/10 my-4" />
-
-                {!user && (
-                  <Button
-                    onClick={() => {
-                      setIsOpen(false);
-                      setIsLoginModalOpen(true);
-                    }}
-                    className="w-full text-xl py-4 flex items-center justify-center gap-2"
-                  >
-                    <FaSignInAlt /> حياك، سجل دخول
-                  </Button>
-                )}
-
-                {user && (
-                  <>
-                    <div className="flex items-center gap-4 mb-4">
-                      <img
-                        src={
-                          profile?.avatar_url ||
-                          `https://ui-avatars.com/api/?name=U&background=38bdf8`
-                        }
-                        className="w-12 h-12 rounded-full border border-primary"
-                        alt="Profile"
-                      />
-                      <div>
-                        <div className="font-bold text-lg text-white">
-                          {profile?.full_name || "المستخدم"}
-                        </div>
-                        <div className="text-sm text-gray-400">
-                          {profile?.email}
-                        </div>
+                      className="w-12 h-12 rounded-full border border-primary"
+                      alt="Profile"
+                    />
+                    <div>
+                      <div className="font-bold text-lg text-white">
+                        {profile?.full_name || "المستخدم"}
+                      </div>
+                      <div className="text-sm text-gray-400">
+                        {profile?.email}
                       </div>
                     </div>
+                  </div>
+                  <Link
+                    href="/settings"
+                    onClick={() => setIsOpen(false)}
+                    className="text-xl flex items-center gap-4 text-white"
+                  >
+                    <FaCog className="text-gray-400" /> الإعدادات
+                  </Link>
+                  <Link
+                    href="/chat"
+                    onClick={() => setIsOpen(false)}
+                    className="text-xl flex items-center gap-4 text-white"
+                  >
+                    <FaHeadset className="text-gray-400" /> فزعة (الدعم الفني)
+                  </Link>
+                  {profile?.role === "admin" && (
                     <Link
-                      href="/settings"
+                      href="/admin"
                       onClick={() => setIsOpen(false)}
-                      className="text-xl flex items-center gap-4 text-white"
+                      className="text-xl flex items-center gap-4 text-sky-400 mt-2"
                     >
-                      <FaCog className="text-gray-400" /> الإعدادات
+                      <FaCog className="text-sky-400" /> لوحة التحكم
                     </Link>
-                    <Link
-                      href="/chat"
-                      onClick={() => setIsOpen(false)}
-                      className="text-xl flex items-center gap-4 text-white"
-                    >
-                      <FaHeadset className="text-gray-400" /> فزعة (الدعم الفني)
-                    </Link>
-                    <Button
-                      variant="danger"
-                      className="w-full text-xl py-4 flex items-center justify-center gap-2 mt-4"
-                      onClick={async () => {
-                        window.dispatchEvent(new CustomEvent('showGlobalLoader', { detail: 'جاري تسجيل الخروج...' }));
-                        await supabase.auth.signOut();
-                        setIsOpen(false);
-                        setIsGlobalLoading(false);
-                      }}
-                    >
-                      <FaSignOutAlt /> إطلع من الحساب
-                    </Button>
-                  </>
-                )}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
+                  )}
+                  <Button
+                    variant="danger"
+                    className="w-full text-xl py-4 flex items-center justify-center gap-2 mt-4"
+                    onClick={async () => {
+                      window.dispatchEvent(new CustomEvent('showGlobalLoader', { detail: 'جاري تسجيل الخروج...' }));
+                      await supabase.auth.signOut();
+                      setIsOpen(false);
+                      setIsGlobalLoading(false);
+                    }}
+                  >
+                    <FaSignOutAlt /> إطلع من الحساب
+                  </Button>
+                </>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Global Loading Overlay */}
       <AnimatePresence>
