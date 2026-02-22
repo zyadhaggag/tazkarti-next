@@ -152,7 +152,7 @@ export default function HomePage() {
             transition={{ delay: 0.2, duration: 0.4 }}
             className="text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-black text-white mb-4 leading-snug drop-shadow-2xl tracking-tight"
           >
-            تجربة <span className="text-primary hover:scale-105 transition-transform duration-500 inline-block">رهيبة</span>
+            تجربة <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary hover:scale-105 transition-transform duration-500 inline-block drop-shadow-lg">رهيبة</span>
             <br />
             <span className="text-white/90">لحجوزاتك وخدماتك</span>
           </motion.h1>

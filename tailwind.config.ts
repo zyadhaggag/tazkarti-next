@@ -8,9 +8,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-cairo)', 'sans-serif'],
+      },
       colors: {
-        primary: "#0072ff", // Deep Electric Blue
-        secondary: "#00c6ff", // Bright Cyan
+        primary: "#0ea5e9", // Sky Blue 500 (Lighter, vibrant blue)
+        secondary: "#38bdf8", // Sky Blue 400 (Even lighter)
         dark: "#030712",    // Very deep gray/black
         "card-bg": "rgba(3, 7, 18, 0.6)",
         "sky-blue": "#0ea5e9",
@@ -20,7 +23,7 @@ const config: Config = {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        "primary-gradient": "linear-gradient(135deg, #0072ff, #00c6ff)",
+        "primary-gradient": "linear-gradient(135deg, #0ea5e9, #38bdf8)",
         "glass-gradient": "linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.005) 100%)",
       },
       animation: {
