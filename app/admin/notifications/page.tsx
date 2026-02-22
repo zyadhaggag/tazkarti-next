@@ -48,6 +48,7 @@ export default function AdminNotificationsPage() {
         if (targetUser === "all") {
             notificationsToInsert = users.map((u) => ({
                 user_id: u.id,
+                type: "admin",
                 title,
                 message,
                 is_read: false,
@@ -56,6 +57,7 @@ export default function AdminNotificationsPage() {
             notificationsToInsert = [
                 {
                     user_id: targetUser,
+                    type: "admin",
                     title,
                     message,
                     is_read: false,

@@ -89,7 +89,7 @@ export default function Header() {
         .limit(10);
       if (data) {
         setNotifications(data);
-        setUnreadCount(data.filter((n: any) => !n.read).length);
+        setUnreadCount(data.filter((n: any) => !n.is_read).length);
       }
     };
 
@@ -186,9 +186,9 @@ export default function Header() {
                       if (!isNotificationsOpen && unreadCount > 0 && user) {
                         await supabase
                           .from("notifications")
-                          .update({ read: true })
+                          .update({ is_read: true })
                           .eq("user_id", user.id)
-                          .eq("read", false);
+                          .eq("is_read", false);
                         setUnreadCount(0);
                       }
                     }}
@@ -222,12 +222,12 @@ export default function Header() {
                                 key={notif.id}
                                 className="flex gap-3 items-start hover:bg-white/5 p-2 rounded-xl transition-colors cursor-pointer"
                               >
-                                {!notif.read && (
+                                {!notif.is_read && (
                                   <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0 shadow-[0_0_10px_#0ea5e9]" />
                                 )}
                                 <div>
                                   <p
-                                    className={`text-sm leading-relaxed ${!notif.read ? "text-white font-bold" : "text-gray-300"}`}
+                                    className={`text-sm leading-relaxed ${!notif.is_read ? "text-white font-bold" : "text-gray-300"}`}
                                   >
                                     {notif.title}
                                   </p>
