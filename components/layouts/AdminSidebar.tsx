@@ -13,6 +13,7 @@ export default function AdminSidebar() {
         { name: 'الإحصائيات', href: '/admin', icon: FaChartPie },
         { name: 'التذاكر', href: '/admin/tickets', icon: FaTicketAlt },
         { name: 'الإشعارات', href: '/admin/notifications', icon: FaBell },
+        { name: 'الدعم الفني', href: '/admin/support', icon: FaBriefcase },
         { name: 'المنتجات', href: '/admin/products', icon: FaShoppingBag },
         { name: 'المستخدمين', href: '/admin/users', icon: FaUsers },
         { name: 'طلبات التوظيف', href: '/admin/applications', icon: FaBriefcase },

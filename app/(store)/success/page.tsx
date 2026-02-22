@@ -7,10 +7,12 @@ import Header from '@/components/layouts/Header'
 import Footer from '@/components/layouts/Footer'
 import Button from '@/components/ui/Button'
 import { fadeInUp } from '@/lib/utils/animations'
+import ClientTitle from '@/components/ui/ClientTitle'
 
 export default function SuccessPage() {
     return (
         <main className="min-h-screen bg-dark flex flex-col">
+            <ClientTitle title="عملية مجزأة" />
             <Header />
 
             <div className="flex-grow flex items-center justify-center pt-32 pb-20 container mx-auto px-6">

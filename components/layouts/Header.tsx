@@ -249,10 +249,13 @@ export default function Header() {
                             </div>
                           )}
                         </div>
-                        <div className="p-3 border-t border-white/5 text-center bg-white/5 hover:bg-white/10 transition-colors cursor-pointer">
-                          <button className="text-sm font-bold text-primary">
+                        <div className="p-3 border-t border-white/5 text-center flex flex-col gap-2">
+                          <button className="text-sm font-bold text-gray-400 bg-white/5 hover:bg-white/10 p-2 rounded-xl transition-colors cursor-pointer w-full">
                             شوف كل الإشعارات
                           </button>
+                          <Link href="/chat" className="text-sm font-bold text-primary bg-primary/10 hover:bg-primary hover:text-dark p-2 rounded-xl transition-colors flex items-center justify-center gap-2 w-full">
+                            <FaHeadset /> الدعم الفني المباشر
+                          </Link>
                         </div>
                       </motion.div>
                     )}

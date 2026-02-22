@@ -11,6 +11,7 @@ import ProductCard from '@/components/ui/ProductCard'
 import Spinner from '@/components/ui/Spinner'
 import { fadeInUp, staggerChildren } from '@/lib/utils/animations'
 import { toast } from 'react-hot-toast'
+import ClientTitle from '@/components/ui/ClientTitle'
 
 export default function StorePage() {
     const [products, setProducts] = useState<Product[]>([])
@@ -72,6 +73,7 @@ export default function StorePage() {
 
     return (
         <main className="min-h-screen bg-dark">
+            <ClientTitle title="المتجر" />
             <Header />
 
             {/* Page Header */}

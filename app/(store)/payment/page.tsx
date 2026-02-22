@@ -13,6 +13,7 @@ import Spinner from '@/components/ui/Spinner'
 import { formatCurrency } from '@/lib/utils/format'
 import { fadeInUp } from '@/lib/utils/animations'
 import { toast } from 'react-hot-toast'
+import ClientTitle from '@/components/ui/ClientTitle'
 
 function PaymentContent() {
     const searchParams = useSearchParams()
@@ -87,6 +88,7 @@ function PaymentContent() {
 
     return (
         <main className="min-h-screen bg-dark">
+            <ClientTitle title="الدفع وإتمام الطلب" />
             <Header />
 
             <div className="pt-32 pb-20 container mx-auto px-6">

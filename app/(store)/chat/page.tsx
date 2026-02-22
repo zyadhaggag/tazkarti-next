@@ -17,6 +17,7 @@ import Footer from "@/components/layouts/Footer";
 import Button from "@/components/ui/Button";
 import { toast } from "react-hot-toast";
 import { formatRelativeTime } from "@/lib/utils/format";
+import ClientTitle from "@/components/ui/ClientTitle";
 
 export default function ChatPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -107,6 +108,7 @@ export default function ChatPage() {
 
   return (
     <main className="min-h-screen bg-dark flex flex-col">
+      <ClientTitle title="الدعم الفني المباشر" />
       <Header />
 
       <div className="flex-grow pt-24 pb-12 container mx-auto px-4 md:px-6 flex flex-col h-screen max-h-[900px]">

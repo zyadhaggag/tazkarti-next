@@ -31,6 +31,7 @@ import Button from "@/components/ui/Button";
 import LoginModal from "@/components/modals/LoginModal";
 import JobModal from "@/components/modals/JobModal";
 import { fadeInUp, staggerChildren } from "@/lib/utils/animations";
+import ClientTitle from "@/components/ui/ClientTitle";
 
 const testimonials = [
   {
@@ -103,6 +104,7 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-dark overflow-hidden">
+      <ClientTitle title="الرئيسية" />
       <Header />
 
       {/* Hero Section */}

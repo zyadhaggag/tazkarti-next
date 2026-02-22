@@ -96,6 +96,7 @@ export default function OrdersPage() {
 
     return (
         <main className="min-h-screen bg-dark">
+            <ClientTitle title="تاريخ الطلبات" />
             <Header />
 
             <div className="pt-32 pb-20 container mx-auto px-6 max-w-5xl">
@@ -164,8 +165,8 @@ export default function OrdersPage() {
                                             <div className="text-2xl font-black text-white">{formatCurrency(order.amount)}</div>
                                             <div
                                                 className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-tighter ${order.status === "completed"
-                                                        ? "bg-green-500/10 text-green-500 border border-green-500/20"
-                                                        : "bg-yellow-500/10 text-yellow-500 border border-yellow-500/20"
+                                                    ? "bg-green-500/10 text-green-500 border border-green-500/20"
+                                                    : "bg-yellow-500/10 text-yellow-500 border border-yellow-500/20"
                                                     }`}
                                             >
                                                 {order.status === "completed" ? (

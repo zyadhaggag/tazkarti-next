@@ -20,6 +20,7 @@ import Button from "@/components/ui/Button";
 import Spinner from "@/components/ui/Spinner";
 import Link from "next/link";
 import { fadeInUp, staggerChildren } from "@/lib/utils/animations";
+import ClientTitle from "@/components/ui/ClientTitle";
 
 export default function ProfilePage() {
     const [profile, setProfile] = useState<Profile | null>(null);
@@ -75,6 +76,7 @@ export default function ProfilePage() {
 
     return (
         <main className="min-h-screen bg-dark">
+            <ClientTitle title="الملف الشخصي" />
             <Header />
 
             <div className="pt-32 pb-20 container mx-auto px-6 max-w-6xl">

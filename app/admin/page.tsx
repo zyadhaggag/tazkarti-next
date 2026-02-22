@@ -10,6 +10,7 @@ import StatCard from '@/components/ui/StatCard'
 import Spinner from '@/components/ui/Spinner'
 import { fadeInUp, staggerChildren } from '@/lib/utils/animations'
 import { formatCurrency } from '@/lib/utils/format'
+import ClientTitle from '@/components/ui/ClientTitle'
 
 const mockSalesData = [
     { date: '1 Feb', amount: 4500 },
@@ -84,6 +85,7 @@ export default function AdminDashboard() {
 
     return (
         <div className="min-h-screen bg-black flex flex-col lg:flex-row rtl">
+            <ClientTitle title="لوحة التحكم" />
             <AdminSidebar />
 
             <main className="flex-grow lg:mr-72 p-6 md:p-12">
