@@ -71,7 +71,7 @@ export default function ProductCard({ product, isLiked, onLike, onBuy, variant =
             variants={fadeInUp}
             whileHover={{ y: -10, scale: 1.02, rotateX: 5, rotateY: 5 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="card-glass group flex flex-col perspective-1000"
+            className="card-glass group flex flex-col perspective-1000 h-full"
         >
             <div className="relative aspect-square overflow-hidden bg-white/5 rounded-t-2xl">
                 <Image

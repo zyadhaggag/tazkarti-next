@@ -192,44 +192,7 @@ export default function HomePage() {
       </section>
 
       <div className="relative z-20 bg-dark w-full shadow-[0_-20px_50px_rgba(0,0,0,0.8)] rounded-t-[3rem] pt-8">
-        {/* Stats Section */}
-        <section className="py-20 relative z-20 -mt-16 overflow-hidden">
-          <div className="container mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-              <div className="absolute inset-0 bg-primary/5 blur-3xl -z-10 rounded-full" />
 
-              {/* Slide from Right (in RTL this is the "Left" visual side or first item) */}
-              <motion.div
-                initial={{ opacity: 0, x: 100 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                viewport={{ once: true, amount: 0.2 }}
-              >
-                <StatCard icon={FaTicketAlt} value={350} label="طلب مكتمل" />
-              </motion.div>
-
-              {/* Slide from Top */}
-              <motion.div
-                initial={{ opacity: 0, y: -100 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                viewport={{ once: true, amount: 0.2 }}
-              >
-                <StatCard icon={FaUserCheck} value={1200} label="عميل مستانس" />
-              </motion.div>
-
-              {/* Slide from Left (in RTL this is the "Right" visual side or last item) */}
-              <motion.div
-                initial={{ opacity: 0, x: -100 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
-                viewport={{ once: true, amount: 0.2 }}
-              >
-                <StatCard icon={FaGamepad} value={85} label="خدمة حصرية" />
-              </motion.div>
-            </div>
-          </div>
-        </section>
 
         {/* Tickets Grid */}
         <section id="tickets" className="py-32 relative">
@@ -317,6 +280,42 @@ export default function HomePage() {
               >
                 ادخل للمتجر الكامل
               </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* Stats Section */}
+        <section className="py-20 relative z-20 overflow-hidden bg-primary/5">
+          <div className="container mx-auto px-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+              <div className="absolute inset-0 bg-primary/5 blur-3xl -z-10 rounded-full" />
+
+              <motion.div
+                initial={{ opacity: 0, x: 100 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                viewport={{ once: true, amount: 0.2 }}
+              >
+                <StatCard icon={FaTicketAlt} value={350} label="طلب مكتمل" />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: -100 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                viewport={{ once: true, amount: 0.2 }}
+              >
+                <StatCard icon={FaUserCheck} value={1200} label="عميل مستانس" />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: -100 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+                viewport={{ once: true, amount: 0.2 }}
+              >
+                <StatCard icon={FaGamepad} value={85} label="خدمة حصرية" />
+              </motion.div>
             </div>
           </div>
         </section>

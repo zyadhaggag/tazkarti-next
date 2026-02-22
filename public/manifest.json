@@ -1,0 +1,16 @@
+{
+    "name": "Tazkarti Store",
+    "short_name": "Tazkarti",
+    "description": "Tazkarti Store Platform",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0d0d0d",
+    "theme_color": "#27e0b5",
+    "icons": [
+        {
+            "src": "/favicon.ico",
+            "sizes": "16x16 32x32 48x48",
+            "type": "image/x-icon"
+        }
+    ]
+}

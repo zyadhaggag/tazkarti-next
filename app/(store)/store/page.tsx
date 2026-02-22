@@ -85,7 +85,7 @@ export default function StorePage() {
                     >
                         <h1 className="text-5xl md:text-6xl font-black text-white mb-6 leading-tight">متجر <span className="text-primary italic">تذكرتي</span></h1>
                         <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed mb-12">
-                            اكتشف أحدث المنتجات الرياضية الحصرية والملابس والأدوات التي لن تجدها في أي مكان آخر.
+                            حياك في متجرنا! هنا تلاقي كل اللي تحتاجه من تصاميم احترافية للوجوهات، برمجة مواقع، وتطبيقات رهيبة تخدم مشروعك.
                         </p>
                     </motion.div>
 
