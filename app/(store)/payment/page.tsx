@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { Suspense, useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaCreditCard, FaTicketAlt, FaShieldAlt, FaChevronLeft, FaPercentage, FaCheckCircle, FaExclamationTriangle } from 'react-icons/fa'
@@ -14,7 +14,7 @@ import { formatCurrency } from '@/lib/utils/format'
 import { fadeInUp } from '@/lib/utils/animations'
 import { toast } from 'react-hot-toast'
 
-export default function PaymentPage() {
+function PaymentContent() {
     const searchParams = useSearchParams()
     const itemId = searchParams.get('item')
     const itemType = searchParams.get('type') || 'ticket'
@@ -218,5 +218,13 @@ export default function PaymentPage() {
 
             <Footer />
         </main>
+    )
+}
+
+export default function PaymentPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-dark flex items-center justify-center">جاري التحميل...</div>}>
+            <PaymentContent />
+        </Suspense>
     )
 }
