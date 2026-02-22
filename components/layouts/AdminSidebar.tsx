@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { FaChartPie, FaTicketAlt, FaShoppingBag, FaUsers, FaBriefcase, FaMoneyBillWave, FaArrowRight, FaCog } from 'react-icons/fa'
+import { FaChartPie, FaTicketAlt, FaShoppingBag, FaUsers, FaBriefcase, FaMoneyBillWave, FaArrowRight, FaCog, FaBell } from 'react-icons/fa'
 import { motion } from 'framer-motion'
 import { slideInRight } from '@/lib/utils/animations'
 
@@ -12,6 +12,7 @@ export default function AdminSidebar() {
     const menuItems = [
         { name: 'الإحصائيات', href: '/admin', icon: FaChartPie },
         { name: 'التذاكر', href: '/admin/tickets', icon: FaTicketAlt },
+        { name: 'الإشعارات', href: '/admin/notifications', icon: FaBell },
         { name: 'المنتجات', href: '/admin/products', icon: FaShoppingBag },
         { name: 'المستخدمين', href: '/admin/users', icon: FaUsers },
         { name: 'طلبات التوظيف', href: '/admin/applications', icon: FaBriefcase },
