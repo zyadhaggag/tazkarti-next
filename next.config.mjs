@@ -1,13 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    /* تجاهل أخطاء TypeScript و ESLint لضمان نجاح الرفع */
     typescript: {
-        // هذا سيسمح بمرور الرفع حتى لو وجدت أخطاء في أنواع البيانات
         ignoreBuildErrors: true,
     },
     eslint: {
-        // هذا سيسمح بمرور الرفع وتجاوز أخطاء التنسيق التي واجهناها سابقاً
         ignoreDuringBuilds: true,
     },
+    /* أي إعدادات أخرى أضفتها سابقاً ضعها هنا */
 };
 
 export default nextConfig;
