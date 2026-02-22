@@ -23,10 +23,12 @@ import { createClient } from "@/lib/supabase/client";
 import { Profile } from "@/lib/types/app.types";
 import Button from "../ui/Button";
 import LoginModal from "../modals/LoginModal";
+import JobModal from "../modals/JobModal";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isJobModalOpen, setIsJobModalOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [notifications, setNotifications] = useState<any[]>([]);
@@ -41,15 +43,18 @@ export default function Header() {
 
   useEffect(() => {
     const handleOpenAuth = () => setIsLoginModalOpen(true);
+    const handleOpenJob = () => setIsJobModalOpen(true);
     const handleShowLoader = (e: any) => {
       setGlobalLoadingMessage(e.detail || "جاري التحميل...");
       setIsGlobalLoading(true);
     };
 
     window.addEventListener("openAuthModal", handleOpenAuth);
+    window.addEventListener("openJobModal", handleOpenJob);
     window.addEventListener("showGlobalLoader", handleShowLoader);
     return () => {
       window.removeEventListener("openAuthModal", handleOpenAuth);
+      window.removeEventListener("openJobModal", handleOpenJob);
       window.removeEventListener("showGlobalLoader", handleShowLoader);
     };
   }, []);
@@ -183,6 +188,7 @@ export default function Header() {
                     variant="ghost"
                     onClick={async () => {
                       setIsNotificationsOpen(!isNotificationsOpen);
+                      if (!isNotificationsOpen) setIsProfileOpen(false);
                       if (!isNotificationsOpen && unreadCount > 0 && user) {
                         await supabase
                           .from("notifications")
@@ -255,7 +261,10 @@ export default function Header() {
                 {/* Profile Dropdown */}
                 <div className="relative profile-dropdown-container">
                   <button
-                    onClick={() => setIsProfileOpen(!isProfileOpen)}
+                    onClick={() => {
+                      setIsProfileOpen(!isProfileOpen);
+                      if (!isProfileOpen) setIsNotificationsOpen(false);
+                    }}
                     className="flex items-center gap-2 hover:bg-white/5 p-2 rounded-full transition-all"
                   >
                     <img
@@ -326,6 +335,15 @@ export default function Header() {
                           >
                             <FaCog className="text-primary" /> الإعدادات
                           </Link>
+                          <button
+                            onClick={() => {
+                              setIsProfileOpen(false);
+                              window.dispatchEvent(new CustomEvent('openJobModal'));
+                            }}
+                            className="w-full flex items-center gap-3 px-4 py-3 text-white hover:bg-white/5 rounded-lg transition-colors text-sm font-medium"
+                          >
+                            <FaBriefcase className="text-primary" /> التوظيف
+                          </button>
                           <Link
                             href="/chat"
                             onClick={() => setIsProfileOpen(false)}
@@ -485,6 +503,10 @@ export default function Header() {
       <LoginModal
         isOpen={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(false)}
+      />
+      <JobModal
+        isOpen={isJobModalOpen}
+        onClose={() => setIsJobModalOpen(false)}
       />
     </>
   );

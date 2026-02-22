@@ -24,6 +24,8 @@ export default function AdminUsersPage() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [updating, setUpdating] = useState<string | null>(null);
+  const [editingUserId, setEditingUserId] = useState<string | null>(null);
+  const [editNameValue, setEditNameValue] = useState("");
 
   const supabase = createClient();
 
@@ -39,6 +41,27 @@ export default function AdminUsersPage() {
       .order("created_at", { ascending: false });
     if (data) setUsers(data);
     setLoading(false);
+  };
+
+  const handleNameSave = async (userId: string) => {
+    if (!editNameValue.trim()) {
+      toast.error("لا يمكن ترك الاسم فارغاً");
+      return;
+    }
+    setUpdating(userId);
+    const { error } = await supabase
+      .from("profiles")
+      .update({ full_name: editNameValue })
+      .eq("id", userId);
+
+    if (error) {
+      toast.error("فشل تحديث الاسم");
+    } else {
+      toast.success("تم تحديث اسم المستخدم بنجاح");
+      setUsers(users.map(u => u.id === userId ? { ...u, full_name: editNameValue } : u));
+    }
+    setEditingUserId(null);
+    setUpdating(null);
   };
 
   const toggleBan = async (user: Profile) => {
@@ -144,9 +167,32 @@ export default function AdminUsersPage() {
                             alt=""
                           />
                           <div>
-                            <div className="font-bold text-sm">
-                              {u.full_name || "بدون اسم"}
-                            </div>
+                            {editingUserId === u.id ? (
+                              <div className="flex items-center gap-2">
+                                <input
+                                  autoFocus
+                                  className="h-7 w-32 bg-white/10 border border-white/20 rounded px-2 text-xs text-white outline-none focus:border-primary"
+                                  value={editNameValue}
+                                  onChange={(e) => setEditNameValue(e.target.value)}
+                                  onKeyDown={(e) => e.key === 'Enter' && handleNameSave(u.id)}
+                                />
+                                <button onClick={() => handleNameSave(u.id)} className="text-green-500 hover:text-green-400">حفظ</button>
+                                <button onClick={() => setEditingUserId(null)} className="text-gray-500 hover:text-white">إلغاء</button>
+                              </div>
+                            ) : (
+                              <div className="font-bold text-sm flex items-center gap-2 group/edit">
+                                {u.full_name || "بدون اسم"}
+                                <button
+                                  onClick={() => {
+                                    setEditingUserId(u.id);
+                                    setEditNameValue(u.full_name || "");
+                                  }}
+                                  className="text-[10px] text-gray-500 opacity-0 group-hover/edit:opacity-100 hover:text-primary transition-all"
+                                >
+                                  تعديل
+                                </button>
+                              </div>
+                            )}
                             <div className="text-[10px] text-gray-500 flex items-center gap-1 font-bold italic lowercase tracking-tight">
                               <FaEnvelope className="text-[8px]" /> {u.email}
                             </div>

@@ -32,7 +32,7 @@ export default function Modal({ isOpen, onClose, children, title, maxWidth = 'ma
                         initial="initial"
                         animate="animate"
                         exit="exit"
-                        className={`relative w-full ${maxWidth} glass border border-white/10 rounded-3xl shadow-2xl overflow-hidden`}
+                        className={`relative w-full ${maxWidth} max-h-[90vh] glass border border-white/10 rounded-3xl shadow-2xl overflow-y-auto custom-scrollbar`}
                     >
                         <div className={title ? "p-6" : "relative"}>
                             {title ? (

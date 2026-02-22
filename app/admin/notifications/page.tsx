@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FaPaperPlane, FaUsers, FaBell } from "react-icons/fa";
+import { FaPaperPlane, FaUsers, FaBell, FaSearch } from "react-icons/fa";
 import { createClient } from "@/lib/supabase/client";
 import { Profile } from "@/lib/types/app.types";
 import AdminSidebar from "@/components/layouts/AdminSidebar";
@@ -12,6 +12,13 @@ import { toast } from "react-hot-toast";
 export default function AdminNotificationsPage() {
     const [users, setUsers] = useState<Profile[]>([]);
     const [loadingUsers, setLoadingUsers] = useState(true);
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const filteredUsers = users.filter(
+        (u) =>
+            u.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            u.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     const [targetUser, setTargetUser] = useState("all");
     const [title, setTitle] = useState("");
@@ -51,6 +58,7 @@ export default function AdminNotificationsPage() {
                 type: "admin",
                 title,
                 message,
+                data: null,
                 is_read: false,
             }));
         } else {
@@ -60,6 +68,7 @@ export default function AdminNotificationsPage() {
                     type: "admin",
                     title,
                     message,
+                    data: null,
                     is_read: false,
                 },
             ];
@@ -105,23 +114,50 @@ export default function AdminNotificationsPage() {
                         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
 
                         <form onSubmit={handleSendNotification} className="space-y-6 relative z-10">
-                            <div className="space-y-2">
+                            <div className="space-y-4 relative">
                                 <label className="text-sm font-bold text-gray-400">المستلم</label>
-                                <div className="relative">
-                                    <FaUsers className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500" />
-                                    <select
-                                        value={targetUser}
-                                        onChange={(e) => setTargetUser(e.target.value)}
-                                        className="w-full h-14 glass text-white border-white/10 rounded-xl pr-12 pl-4 focus:border-primary outline-none transition-all appearance-none cursor-pointer leading-[1.2]"
-                                        disabled={loadingUsers}
-                                    >
-                                        <option value="all" className="bg-dark text-white p-2">جميع المستخدمين (إشعار عام)</option>
-                                        {users.map((u) => (
-                                            <option key={u.id} value={u.id} className="bg-dark text-white p-2">
-                                                {u.full_name || "بدون اسم"} - ({u.email})
-                                            </option>
-                                        ))}
-                                    </select>
+
+                                <div className="space-y-3 p-4 glass rounded-xl border border-white/10">
+                                    <div className="relative">
+                                        <FaSearch className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500" />
+                                        <input
+                                            type="text"
+                                            placeholder="ابحث بالاسم أو البريد الإلكتروني..."
+                                            value={searchTerm}
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                            className="w-full h-12 bg-dark/50 text-white border border-white/10 rounded-xl pr-12 pl-4 focus:border-primary outline-none transition-all"
+                                        />
+                                    </div>
+
+                                    <div className="max-h-60 overflow-y-auto custom-scrollbar space-y-2">
+                                        <div
+                                            onClick={() => setTargetUser("all")}
+                                            className={`p-3 rounded-xl cursor-pointer transition-all border ${targetUser === "all" ? "bg-primary/20 border-primary" : "bg-dark/50 border-white/5 hover:border-white/20"}`}
+                                        >
+                                            <div className="font-bold text-white mb-1">جميع المستخدمين</div>
+                                            <div className="text-xs text-gray-400">إرسال إشعار عام للكل</div>
+                                        </div>
+
+                                        {loadingUsers ? (
+                                            <div className="p-4 text-center"><Spinner size="sm" /></div>
+                                        ) : filteredUsers.length > 0 ? (
+                                            filteredUsers.map((u) => (
+                                                <div
+                                                    key={u.id}
+                                                    onClick={() => setTargetUser(u.id)}
+                                                    className={`p-3 rounded-xl cursor-pointer transition-all border ${targetUser === u.id ? "bg-primary/20 border-primary" : "bg-dark/50 border-white/5 hover:border-white/20"}`}
+                                                >
+                                                    <div className="font-bold text-white mb-1 flex items-center gap-2">
+                                                        {u.full_name || "بدون اسم"}
+                                                        {u.role === "admin" && <span className="text-[10px] bg-primary/20 text-primary px-2 py-0.5 rounded">أدمن</span>}
+                                                    </div>
+                                                    <div className="text-xs text-gray-400">{u.email}</div>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <div className="p-4 text-center text-sm text-gray-500">لا يوجد مستخدمين بهذا الاسم</div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
 
